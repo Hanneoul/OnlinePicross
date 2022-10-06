@@ -17,7 +17,7 @@ typedef struct tagBITMAPHEADER {
 }BITMAPHEADER;
 
 
-BYTE* LoadBitmapFile(BITMAPHEADER* bitmapHeader, const char* filename)
+BYTE* LoadBitmapFile(BITMAPHEADER* bitmapHeader, int* iWidth, int* iHeight, const char* filename)
 {
     FILE* fp = fopen(filename, "rb");	//파일을 이진읽기모드로 열기
     if (fp == NULL)
@@ -31,6 +31,8 @@ BYTE* LoadBitmapFile(BITMAPHEADER* bitmapHeader, const char* filename)
         fread(&bitmapHeader->bi, sizeof(BITMAPINFOHEADER), 1, fp);	//비트맵인포헤더 읽기
         fread(&bitmapHeader->hRGB, sizeof(RGBQUAD), 256, fp);	//색상팔렛트 읽기
 
+        *iWidth = bitmapHeader->bi.biWidth;
+        *iHeight = bitmapHeader->bi.biHeight;
         int imgSizeTemp = bitmapHeader->bi.biWidth * bitmapHeader->bi.biHeight;	//이미지 사이즈 계산
      
 
@@ -79,8 +81,9 @@ int main()
     glfwSetKeyCallback(window, key_callback);
 
     BITMAPHEADER originalHeader;	//비트맵의 헤더부분을 파일에서 읽어 저장할 구조체
-    //int imgSize;			//이미지의 크기를 저장할 변수
-    BYTE* image = LoadBitmapFile(&originalHeader, "art_sample.bmp"); //비트맵파일을 읽어 화소정보를 저장
+    int imgWidth;
+    int imgHeight;			//이미지의 크기를 저장할 변수
+    BYTE* image = LoadBitmapFile(&originalHeader, &imgWidth, &imgHeight, "art_sample.bmp"); //비트맵파일을 읽어 화소정보를 저장
     if (image == NULL) return 0;
 
     glClearColor(0.0, 0.0, 0.0, 0.0);
@@ -96,7 +99,7 @@ int main()
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,
         GL_NEAREST);
 
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 316, 311, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, imgWidth, imgHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
 
     while (!glfwWindowShouldClose(window))
     {
