@@ -44,7 +44,7 @@ BYTE* LoadBitmapFile(BITMAPHEADER* bitmapHeader, int* iWidth, int* iHeight, cons
         int* arr = (int*)malloc(sizeof(int*) * *iWidth);
         
         int count = 0;
-        for (i = 0; i < *iHeight; i++)
+        for (i = 0; i < *iWidth * *iHeight; i++)
         {
             BYTE temp = image[i * 3];
             image[i * 3] = image[i * 3 + 2];
@@ -55,12 +55,18 @@ BYTE* LoadBitmapFile(BITMAPHEADER* bitmapHeader, int* iWidth, int* iHeight, cons
             printf("%d \n", image[i * 3 + 2]);*/
            
             if (temp < 200 || image[i * 3] < 200 || image[i * 3 + 2] < 200) {
-                printf("%s \n", "true");
+                printf("%s", "O");
                 count += 1;
+                
+                if (i % *iWidth == 0) {
+                    printf("%s \n", "");
+                }
             }
             else {
-                printf("%s \n", "false");
-               
+                printf("%s", "X");
+                if (i % *iWidth == 0) {
+                    printf("%s \n", "");
+                }
             }
         }
         printf("%d \n", count);
