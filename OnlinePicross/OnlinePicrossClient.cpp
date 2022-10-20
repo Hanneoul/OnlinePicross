@@ -5,7 +5,6 @@
 #include <stdlib.h>
 #include <Windows.h>
 
-
 #pragma comment(lib, "OpenGL32")
 
 static GLuint texName;
@@ -33,6 +32,7 @@ BYTE* LoadBitmapFile(BITMAPHEADER* bitmapHeader, int* iWidth, int* iHeight, cons
 
         *iWidth = bitmapHeader->bi.biWidth;
         *iHeight = bitmapHeader->bi.biHeight;
+        
         int imgSizeTemp = bitmapHeader->bi.biWidth * bitmapHeader->bi.biHeight;	//이미지 사이즈 계산
      
 
