@@ -35,6 +35,41 @@ int main(int argc, char* argv[])
 		   0,0,0,1,0,0,0,
 	};
 
+	LPCSTR wText[HEIGHT];
+	LPCSTR hText[WIDTH];
+
+	int cw = 0;
+	int ch = 0;
+	int maxWSpace = 0;
+	int maxHSpace = 0;
+
+	for(ch=0;ch<HEIGHT; ch++)
+	{
+		int wCount = 0;
+		for (cw = 0; cw < WIDTH-1; cw++)
+		{
+			if (image[ch * WIDTH + cw] == 1)
+			{
+				
+				if (image[ch * WIDTH + cw + 1] == 1)
+				{
+					wCount++;
+				}
+				if (image[ch * WIDTH + cw + 1] == 1)
+				{
+					wCount++;
+				}
+			}
+			if (image[ch * WIDTH + cw] == 1 && image[ch * WIDTH + cw] == 0)
+			{ }
+			if (Image[ch * WIDTH + cw] == 1)
+			{
+				wText[ch] += ' ';
+			}
+		}
+	}
+
+
 	while (1)
 	{
 		if (GetKeyState(VK_ESCAPE) & 0x8000)
