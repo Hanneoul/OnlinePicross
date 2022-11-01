@@ -12,8 +12,40 @@ void gotoxy(int x, int y) {
 	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), pos);
 }
 
+void prtreversedString(char str[]) {
+	int i, len = 0;
+	while (str[len] != 0) {
+		len++;
+	}
+	for (i = len - 1; i >= 0; i--) {
+		printf("%c", str[i]);
+	}
+}
+
+void DimensionalArray() {
+	int i, j;
+	int ary1[][3] = { 0 };
+
+	int arr_wid_len = sizeof(ary1[0]) / sizeof(ary1[0][0]);
+	int arr_hei_len = (sizeof(ary1) / arr_wid_len) / sizeof(ary1[0][0]);
+
+
+	for (i = 0; i < HEIGHT; i++) {
+		printf("\n");
+		for (j = 0; j < WIDTH; j++) {
+			int* ptr = *ary1;
+			printf(" %d", *ptr);
+
+		}
+	}
+}
+
 int main(int argc, char* argv[])
 {
+	/*DimensionalArray();*/
+	while (1) {
+
+	}
 	int Image[WIDTH * HEIGHT] = {
 	   0,1,0,1,0,1,0,
 	   0,0,1,1,1,0,0,
