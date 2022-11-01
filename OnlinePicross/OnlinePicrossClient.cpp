@@ -5,7 +5,6 @@
 #include <stdlib.h>
 #include <Windows.h>
 
-
 #pragma comment(lib, "OpenGL32")
 
 static GLuint texName;
@@ -33,6 +32,7 @@ BYTE* LoadBitmapFile(BITMAPHEADER* bitmapHeader, int* iWidth, int* iHeight, cons
 
         *iWidth = bitmapHeader->bi.biWidth;
         *iHeight = bitmapHeader->bi.biHeight;
+        
         int imgSizeTemp = bitmapHeader->bi.biWidth * bitmapHeader->bi.biHeight;	//이미지 사이즈 계산
      
 
@@ -40,37 +40,12 @@ BYTE* LoadBitmapFile(BITMAPHEADER* bitmapHeader, int* iWidth, int* iHeight, cons
         fread(image, sizeof(BYTE), imgSizeTemp * 3, fp);//이미지 크기만큼 파일에서 읽어오기
         fclose(fp);
         int i = 0;
-
-        int* arr = (int*)malloc(sizeof(int*) * *iWidth);
-        
-        int count = 0;
-        for (i = 0; i < *iWidth * *iHeight; i++)
+        for (i = 0; i < imgSizeTemp; i++)
         {
             BYTE temp = image[i * 3];
             image[i * 3] = image[i * 3 + 2];
             image[i * 3 + 2] = temp;
-
-          /*  printf("%d", temp);
-            printf("%d", image[i * 3]);
-            printf("%d \n", image[i * 3 + 2]);*/
-           
-            if (temp < 200 || image[i * 3] < 200 || image[i * 3 + 2] < 200) {
-                printf("%s", "O");
-                count += 1;
-                
-                if (i % *iWidth == 0) {
-                    printf("%s \n", "");
-                }
-            }
-            else {
-                printf("%s", "X");
-                if (i % *iWidth == 0) {
-                    printf("%s \n", "");
-                }
-            }
         }
-        printf("%d \n", count);
-        
 
         return image;
     }
@@ -96,7 +71,7 @@ int main()
     if (!glfwInit())
         exit(EXIT_FAILURE);
 
-    window = glfwCreateWindow(640, 480, "Picross Client Example", NULL, NULL); //640 480
+    window = glfwCreateWindow(640, 480, "Picross Client Example", NULL, NULL);
     if (!window)
     {
         glfwTerminate();
