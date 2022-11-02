@@ -127,22 +127,33 @@ int main(int argc, char* argv[])
 
 		int i = 0;
 		int j = 0;
-		for (i = 0; i < WIDTH + 2; i++)
-			for (j = 0; j < HEIGHT + 2; j++)
+		for (i = 0; i < WIDTH + 3; i++) //2
+			for (j = 0; j < HEIGHT + 3; j++) //2
 			{
 				gotoxy(i * 2, j);
 
-				if (j == 0 || j == HEIGHT + 1)
+				if (j == 1 || j == HEIGHT + 2) //0 1
+				{
 					printf("--");
-				else if (i == 0)
+				}
+				else if (i == 1) { //0
+					
 					printf("|");
-				else if (i == WIDTH + 1)
+				}
+				else if (i == WIDTH + 2) { //1
 					printf(" |");
+				}
+				else if (j == 0 && i > 1) {
+					printf("%s", "5");
+				}
+				else if (i == 0 && j > 1) {
+					printf("%s", "5");
+				}
 				else
 				{
-					if (Image[(j + 4) - HEIGHT][WIDTH + (i - 1)] == 0)
+					if (Image[(j + 3) - HEIGHT][WIDTH + (i - 2)] == 0) //4 1
 					{
-						if (i - 1 == cursor[0] && j - 1 == cursor[1])
+						if (i - 2 == cursor[0] && j - 2 == cursor[1])
 						{
 							SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 13);
 							printf("бр");
@@ -155,7 +166,7 @@ int main(int argc, char* argv[])
 					}
 					else
 					{
-						if (i - 1 == cursor[0] && j - 1 == cursor[1])
+						if (i - 2 == cursor[0] && j - 2 == cursor[1]) // 1 
 						{
 							SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 13);
 							printf("бс");
