@@ -53,7 +53,7 @@ void ArrayReview(int arr[HEIGHT][WIDTH]) {
 		for (int j = 0; j < WIDTH; j++) {
 			printf(" %d", arr[i][j]);
 		}
-		printf(" %s", "/");
+		printf("\n");
 	}
 }
 
@@ -80,6 +80,22 @@ int main(int argc, char* argv[])
 		{0,0,0,1,0,0,0},
 		{0,0,0,1,0,0,0}
 	};
+
+	//ArrayReview(Image);
+	int Num = 0;
+	char Result[WIDTH] = "";
+	
+	
+	for (int i = 0; i < WIDTH; i++) {
+		for (int j = 0; j < HEIGHT; j++) {
+			if (Image[j][i] != Image[j - 1][i]) {
+				
+			}
+\
+			printf(" %d", Result[j]);
+		}
+		printf("\n");
+	}
 	
 
 
@@ -130,7 +146,7 @@ int main(int argc, char* argv[])
 		for (i = 0; i < WIDTH + 3; i++) //2
 			for (j = 0; j < HEIGHT + 3; j++) //2
 			{
-				gotoxy(i * 2, j);
+				gotoxy(i * 2 + 10, j + 10);
 
 				if (j == 1 || j == HEIGHT + 2) //0 1
 				{
