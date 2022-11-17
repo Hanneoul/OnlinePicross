@@ -501,32 +501,35 @@ int main(int argc, char* argv[])
 
 	while (1)
 	{
-		if (GetKeyState(VK_ESCAPE) & 0x8000)
+
+
+
+		if (GetAsyncKeyState(VK_ESCAPE) && 0x0001)
 		{
 			break;
 		}
-		if (GetKeyState(VK_LEFT) & 0x8000)
+		if (GetAsyncKeyState(VK_LEFT) & 0x0001)
 		{
 			if (0 <= (cursor[0] - 1))
 			{
 				cursor[0]--;
 			}
 		}
-		if (GetKeyState(VK_RIGHT) & 0x8000)
+		if (GetAsyncKeyState(VK_RIGHT) & 0x0001)
 		{
 			if (WIDTH - 1 >= (cursor[0] + 1))
 			{
 				cursor[0]++;
 			}
 		}
-		if (GetKeyState(VK_UP) & 0x8000)
+		if (GetAsyncKeyState(VK_UP) & 0x0001)
 		{
 			if (0 <= (cursor[1] - 1))
 			{
 				cursor[1]--;
 			}
 		}
-		if (GetAsyncKeyState(VK_DOWN) & 0x8000)
+		if (GetAsyncKeyState(VK_DOWN) & 0x0001)
 		{
 			if (HEIGHT - 1 >= (cursor[1] + 1))
 			{
@@ -535,15 +538,18 @@ int main(int argc, char* argv[])
 		}
 
 		//º±≈√!
-		if (GetAsyncKeyState(VK_SPACE) & 0x8000)
+		if (GetAsyncKeyState(VK_SPACE) & 0x0001)
 		{
-			
+			CONSOLE_SCREEN_BUFFER_INFO presentCur;
+			GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &presentCur);
+			printf("%d, %d\n", presentCur.dwCursorPosition.X, presentCur.dwCursorPosition.Y);
+
 		}
 		
 
 		int i = 0;
 		int j = 0;
-		for (i = 0; i < WIDTH + 3 +3; i++) //2
+		for (i = 0; i < WIDTH + 3 + 3; i++) //2
 			for (j = 0; j < HEIGHT + 3 + 3; j++) //2
 			{
 				gotoxy(i * 2 + 10, j + 10);
@@ -623,21 +629,22 @@ int main(int argc, char* argv[])
 					}
 					else
 					{
-						if (i - 2  - 3== cursor[0] && j - 2 - 3 == cursor[1]) // 1 
+						if (i - 2  - 3 == cursor[0] && j - 2 - 3 == cursor[1]) // 1 
 						{
 							SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 13);
-							printf("°·");
+							printf("°‡");
 							SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
 						}
 						else if (i > 3 && j > 3)
 						{
-							SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 2);
-							printf("°·");
+							SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
+							printf("°‡");
 							SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
 						}
 					}
 				}
 			}
+
 
 	}
 
