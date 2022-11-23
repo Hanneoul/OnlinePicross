@@ -482,6 +482,15 @@ int main(int argc, char* argv[])
 		{0,0,0,1,0,0,0}
 	};
 
+	int Check_List[HEIGHT][WIDTH] = {
+		{0, 0, 0, 0, 0, 0, 0,},
+		{0, 0, 0, 0, 0, 0, 0,},
+		{0, 0, 0, 0, 0, 0, 0,},
+		{0, 0, 0, 0, 0, 0, 0,},
+		{0, 0, 0, 0, 0, 0, 0,},
+		{0, 0, 0, 0, 0, 0, 0,}
+	};
+
 	//ArrayReview(Image);
 	int Num = 0;
 	list<int> Vertical_Number1; // ¸Ç¾Æ·¡
@@ -513,6 +522,7 @@ int main(int argc, char* argv[])
 			if (0 <= (cursor[0] - 1))
 			{
 				cursor[0]--;
+				system("cls");
 			}
 		}
 		if (GetAsyncKeyState(VK_RIGHT) & 0x0001)
@@ -520,6 +530,7 @@ int main(int argc, char* argv[])
 			if (WIDTH - 1 >= (cursor[0] + 1))
 			{
 				cursor[0]++;
+				system("cls");
 			}
 		}
 		if (GetAsyncKeyState(VK_UP) & 0x0001)
@@ -527,6 +538,7 @@ int main(int argc, char* argv[])
 			if (0 <= (cursor[1] - 1))
 			{
 				cursor[1]--;
+				system("cls");
 			}
 		}
 		if (GetAsyncKeyState(VK_DOWN) & 0x0001)
@@ -534,6 +546,7 @@ int main(int argc, char* argv[])
 			if (HEIGHT - 1 >= (cursor[1] + 1))
 			{
 				cursor[1]++;
+				system("cls");
 			}
 		}
 
@@ -542,10 +555,21 @@ int main(int argc, char* argv[])
 		{
 			CONSOLE_SCREEN_BUFFER_INFO presentCur;
 			GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &presentCur);
-			printf("%d, %d\n", presentCur.dwCursorPosition.X, presentCur.dwCursorPosition.Y);
+			/*printf("%d, %d\n", presentCur.dwCursorPosition.X, presentCur.dwCursorPosition.Y);*/
+
+			Check_List[cursor[1]][cursor[0]] = 1;
+
+		/*	for (int i = 0; i < HEIGHT; i++) {
+				for (int j = 0; j < WIDTH; j++)
+				{
+					printf("%d", Check_List[i][j]);
+				}
+				printf("\n");
+			}*/
+			printf("%d", Image[cursor[1]][cursor[0]]);
+			printf("%d", Check_List[cursor[1]][cursor[0]]);
 
 		}
-		
 
 		int i = 0;
 		int j = 0;
@@ -553,6 +577,7 @@ int main(int argc, char* argv[])
 			for (j = 0; j < HEIGHT + 3 + 3; j++) //2
 			{
 				gotoxy(i * 2 + 10, j + 10);
+
 
 				if (j == 1 + 3 || j == HEIGHT + 2 + 3) //0 1
 				{
@@ -614,7 +639,7 @@ int main(int argc, char* argv[])
 
 				else
 				{
-					if (Image[(j) - HEIGHT][WIDTH + (i - 2 - 3)] == 0) //4 1
+					if (Check_List[(j) - HEIGHT][WIDTH + (i - 2 - 3)] == 0 && Image[(j)-HEIGHT][WIDTH + (i - 2 - 3)] == 0 && i > 3 && j > 3) //4 1
 					{
 						if (i - 2 - 3 == cursor[0] && j - 2 - 3 == cursor[1])
 						{
@@ -622,30 +647,60 @@ int main(int argc, char* argv[])
 							printf("¡à");
 							SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
 						}
-						else if (i > 3 && j > 3)
+						else
 						{
 							printf("¡à");
+							SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
 						}
 					}
-					else
+					else if(Check_List[(j)-HEIGHT][WIDTH + (i - 2 - 3)] == 1 && Image[(j)-HEIGHT][WIDTH + (i - 2 - 3)] == 1 && i > 3 && j > 3)
 					{
-						if (i - 2  - 3 == cursor[0] && j - 2 - 3 == cursor[1]) // 1 
+						if (i - 2 - 3 == cursor[0] && j - 2 - 3 == cursor[1])
+						{
+							SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 13);
+							printf("¡á");
+							SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
+						}
+						else
+						{
+							printf("¡á");
+							SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
+						}
+					}
+					else if (Check_List[(j)-HEIGHT][WIDTH + (i - 2 - 3)] == 0 && Image[(j)-HEIGHT][WIDTH + (i - 2 - 3)] == 1 && i > 3 && j > 3)
+					{
+						if (i - 2 - 3 == cursor[0] && j - 2 - 3 == cursor[1])
 						{
 							SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 13);
 							printf("¡à");
 							SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
 						}
-						else if (i > 3 && j > 3)
+						else
 						{
-							SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
 							printf("¡à");
 							SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
 						}
+						
 					}
+					else if (Check_List[(j)-HEIGHT][WIDTH + (i - 2 - 3)] == 1 && Image[(j)-HEIGHT][WIDTH + (i - 2 - 3)] == 0 && i > 3 && j > 3)
+					{
+						if (i - 2 - 3 == cursor[0] && j - 2 - 3 == cursor[1])
+						{
+							SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 13);
+							printf("©ä");
+							SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
+						}
+						else
+						{
+							printf("©ä");
+							SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
+						}
+					}
+					
 				}
 			}
 
-
+			
 	}
 
 	return 0;
