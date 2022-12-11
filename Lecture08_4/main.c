@@ -7,8 +7,6 @@
 #define HEIGHT 6
 #define MAX_LENGTH 64
 
-
-
 void prtreversedString(char str[]) {
 	int i, len = 0;
 	while (str[len] != 0) {
@@ -18,9 +16,6 @@ void prtreversedString(char str[]) {
 		printf("%c", str[i]);
 	}
 }
-
-
-
 int main() {
 	int i, j;
 	int ary1[][3]={0};
@@ -37,11 +32,7 @@ int main() {
 			
 		}
 	}
-
-	
-
-
-	char str[]= {"string"};
+	char str[]= {"123"};
 	prtreversedString(str);
 	return 0;
 	

@@ -32,6 +32,24 @@ void prtreversedString(char str[]) { //문자열 거꾸로 돌리기
 	}
 }
 
+void DimensionalArray() { //2차원 배열 생성 테스트
+	int i, j;
+	int ary1[][3] = { 0 };
+
+	int arr_wid_len = sizeof(ary1[0]) / sizeof(ary1[0][0]);
+	int arr_hei_len = (sizeof(ary1) / arr_wid_len) / sizeof(ary1[0][0]);
+
+
+	for (i = 0; i < HEIGHT; i++) {
+		printf("\n");
+		for (j = 0; j < WIDTH; j++) {
+			int* ptr = *ary1;
+			printf(" %d", *ptr);
+
+		}
+	}
+}
+
 void ArrayReview(int arr[HEIGHT][WIDTH]) {
 	for (int i = 0; i < HEIGHT; i++) {
 		for (int j = 0; j < WIDTH; j++) {
@@ -401,39 +419,52 @@ void CheckNemoCount_Vertical(struct VH_Array* vh_array, int InputArr[HEIGHT][WID
 
 list<int> Vertical_Sort(struct VH_Array* vh_array) {
 	list<int> Sort_List;
+
 	if (vh_array->Vertical_1_Result.size() > 0) {
 		Sort_List.push_back(vh_array->Vertical_1_Result.front());
 		vh_array->Vertical_1_Result.pop_front();
 	}
+
 	if (vh_array->Vertical_2_Result.size() > 0) {
 		Sort_List.push_back(vh_array->Vertical_2_Result.front());
 		vh_array->Vertical_2_Result.pop_front();
 	}
+
 	if (vh_array->Vertical_3_Result.size() > 0) {
 		Sort_List.push_back(vh_array->Vertical_3_Result.front());
 		vh_array->Vertical_3_Result.pop_front();
 	}
+
 	if (vh_array->Vertical_4_Result.size() > 0) {
 		Sort_List.push_back(vh_array->Vertical_4_Result.front());
 		vh_array->Vertical_4_Result.pop_front();
 	}
+
 	if (vh_array->Vertical_5_Result.size() > 0) {
 		Sort_List.push_back(vh_array->Vertical_5_Result.front());
 		vh_array->Vertical_5_Result.pop_front();
 	}
+
 	if (vh_array->Vertical_6_Result.size() > 0) {
 		Sort_List.push_back(vh_array->Vertical_6_Result.front());
 		vh_array->Vertical_6_Result.pop_front();
 	}
+
 	if (vh_array->Vertical_7_Result.size() > 0) {
 		Sort_List.push_back(vh_array->Vertical_7_Result.front());
 		vh_array->Vertical_7_Result.pop_front();
 	}
+
+
+
+
+
+
 	return Sort_List;
 }
 
 
-int main(int argc, char* argv[])
+int main(int argc, char* argv[], COORD pos)
 {
 	VH_Array vh_Array;
 
@@ -451,15 +482,6 @@ int main(int argc, char* argv[])
 		{0,0,0,1,0,0,0}
 	};
 
-	int Check_List[HEIGHT][WIDTH] = {
-		{0, 0, 0, 0, 0, 0, 0,},
-		{0, 0, 0, 0, 0, 0, 0,},
-		{0, 0, 0, 0, 0, 0, 0,},
-		{0, 0, 0, 0, 0, 0, 0,},
-		{0, 0, 0, 0, 0, 0, 0,},
-		{0, 0, 0, 0, 0, 0, 0,}
-	};
-
 	//ArrayReview(Image);
 	int Num = 0;
 	list<int> Vertical_Number1; // 맨아래
@@ -467,9 +489,9 @@ int main(int argc, char* argv[])
 	list<int> Vertical_Number3; // 상단 세로줄 출력문
 
 
+
 	CheckNemoCount_Horizontal(&vh_Array, Image);
 	CheckNemoCount_Vertical(&vh_Array, Image);
-
 
 
 	Vertical_Number1 = Vertical_Sort(&vh_Array);
@@ -479,66 +501,49 @@ int main(int argc, char* argv[])
 
 	while (1)
 	{
-
-
-
-		if (GetAsyncKeyState(VK_ESCAPE) && 0x0001)
+		if (GetKeyState(VK_ESCAPE) & 0x8000)
 		{
 			break;
 		}
 		if (GetAsyncKeyState(VK_LEFT) & 0x0001)
 		{
+			//system("pause");
 			if (0 <= (cursor[0] - 1))
 			{
 				cursor[0]--;
-				system("cls");
 			}
+			
 		}
-		if (GetAsyncKeyState(VK_RIGHT) & 0x0001)
+		if (GetAsyncKeyState(VK_RIGHT)& 0x0001)
 		{
+			//system("pause");
 			if (WIDTH - 1 >= (cursor[0] + 1))
 			{
 				cursor[0]++;
-				system("cls");
 			}
+			
 		}
 		if (GetAsyncKeyState(VK_UP) & 0x0001)
 		{
+			//system("pause");
 			if (0 <= (cursor[1] - 1))
 			{
 				cursor[1]--;
-				system("cls");
 			}
+			
 		}
 		if (GetAsyncKeyState(VK_DOWN) & 0x0001)
 		{
+			//system("pause");
 			if (HEIGHT - 1 >= (cursor[1] + 1))
 			{
 				cursor[1]++;
-				system("cls");
-			}
+			}		
 		}
 
 		//선택!
-		if (GetAsyncKeyState(VK_SPACE) & 0x0001)
-		{
-			CONSOLE_SCREEN_BUFFER_INFO presentCur;
-			GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &presentCur);
-			/*printf("%d, %d\n", presentCur.dwCursorPosition.X, presentCur.dwCursorPosition.Y);*/
+		
 
-			Check_List[cursor[1]][cursor[0]] = 1;
-
-			/*	for (int i = 0; i < HEIGHT; i++) {
-					for (int j = 0; j < WIDTH; j++)
-					{
-						printf("%d", Check_List[i][j]);
-					}
-					printf("\n");
-				}*/
-			printf("%d", Image[cursor[1]][cursor[0]]);
-			printf("%d", Check_List[cursor[1]][cursor[0]]);
-
-		}
 
 		int i = 0;
 		int j = 0;
@@ -546,7 +551,6 @@ int main(int argc, char* argv[])
 			for (j = 0; j < HEIGHT + 3 + 3; j++) //2
 			{
 				gotoxy(i * 2 + 10, j + 10);
-
 
 				if (j == 1 + 3 || j == HEIGHT + 2 + 3) //0 1
 				{
@@ -608,7 +612,7 @@ int main(int argc, char* argv[])
 
 				else
 				{
-					if (Check_List[(j)-HEIGHT][WIDTH + (i - 2 - 3)] == 0 && Image[(j)-HEIGHT][WIDTH + (i - 2 - 3)] == 0 && i > 3 && j > 3) //4 1
+					if (Image[(j)-HEIGHT][WIDTH + (i - 2 - 3)] == 0) //4 1
 					{
 						if (i - 2 - 3 == cursor[0] && j - 2 - 3 == cursor[1])
 						{
@@ -616,61 +620,47 @@ int main(int argc, char* argv[])
 							printf("□");
 							SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
 						}
-						else
+						else if (i > 3 && j > 3)
 						{
 							printf("□");
-							SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
 						}
 					}
-					else if (Check_List[(j)-HEIGHT][WIDTH + (i - 2 - 3)] == 1 && Image[(j)-HEIGHT][WIDTH + (i - 2 - 3)] == 1 && i > 3 && j > 3)
+					else
 					{
-						if (i - 2 - 3 == cursor[0] && j - 2 - 3 == cursor[1])
+						if (i - 2 - 3 == cursor[0] && j - 2 - 3 == cursor[1]) // 1 
 						{
 							SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 13);
+							printf("□");
+							SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
+						}
+						else if (i > 3 && j > 3)
+						{
+							SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
 							printf("■");
 							SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
 						}
-						else
-						{
-							printf("■");
-							SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
-						}
 					}
-					else if (Check_List[(j)-HEIGHT][WIDTH + (i - 2 - 3)] == 0 && Image[(j)-HEIGHT][WIDTH + (i - 2 - 3)] == 1 && i > 3 && j > 3)
-					{
-						if (i - 2 - 3 == cursor[0] && j - 2 - 3 == cursor[1])
-						{
-							SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 13);
-							printf("□");
-							SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
-						}
-						else
-						{
-							printf("□");
-							SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
-						}
-
-					}
-					else if (Check_List[(j)-HEIGHT][WIDTH + (i - 2 - 3)] == 1 && Image[(j)-HEIGHT][WIDTH + (i - 2 - 3)] == 0 && i > 3 && j > 3)
-					{
-						if (i - 2 - 3 == cursor[0] && j - 2 - 3 == cursor[1])
-						{
-							SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 13);
-							printf("⒳");
-							SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
-						}
-						else
-						{
-							printf("⒳");
-							SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
-						}
-					}
-
 				}
 			}
-
-
+		if (GetAsyncKeyState(VK_SPACE) & 0x0001)
+		{
+			SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), pos);
+			if (i - 2 - 3 == cursor[0] && j - 2 - 3 == cursor[1]) // 1 
+			{
+				
+				SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 13);
+				printf("▩");
+				SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
+			}
+			else if (i > 3 && j > 3)
+			{
+				SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), pos);
+				SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
+				printf("■");
+				SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
+			}
+		}
 	}
-
+	
 	return 0;
 }
